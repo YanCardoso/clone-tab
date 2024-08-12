@@ -4,7 +4,9 @@
   "description": "Este repositório contém um clone do Tab News, desenvolvido como parte de uma iniciativa pessoal para promover uma mudança de hábito no estudo de programação. O objetivo é aplicar e aprimorar habilidades de desenvolvimento web, ao mesmo tempo em que se constrói uma plataforma funcional para a leitura de notícias.",
   "main": "index.js",
   "scripts": {
-    "dev": "next dev"
+    "dev": "next dev",
+    "lint:check": "prettier --check .",
+    "lint:fix": "prettier --write ."
   },
   "author": "Yan Cardoso",
   "license": "MIT",
@@ -12,5 +14,8 @@
     "next": "^13.1.6",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
+  },
+  "devDependencies": {
+    "prettier": "^3.3.3"
   }
 }
