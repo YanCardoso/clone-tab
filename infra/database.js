@@ -1,4 +1,4 @@
-import { Client, Pool } from "pg";
+import {Client, Pool} from 'pg';
 
 const query = async (queryObject) => {
   const client = new Client({
@@ -7,7 +7,10 @@ const query = async (queryObject) => {
     user: process.env.POSTGRES_USER,
     database: process.env.POSTGRES_DB,
     password: process.env.POSTGRES_PASSWORD,
-    ssl: process.env.NODE_ENV === "development" ? false : true,
+    ssl:
+      process.env.NODE_ENV === 'development' || process.env.NODE_ENV === 'test'
+        ? false
+        : true
   });
 
   try {
@@ -31,10 +34,10 @@ const pool = async () => {
     password: process.env.POSTGRES_PASSWORD,
     max: 20,
     idleTimeoutMillis: 30000,
-    connectionTimeoutMillis: 2000,
+    connectionTimeoutMillis: 2000
   });
 };
 
 export default {
-  query: query,
+  query: query
 };
