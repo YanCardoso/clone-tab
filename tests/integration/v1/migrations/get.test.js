@@ -1,14 +1,18 @@
 import database from 'infra/database';
 
+async function cleanDatabase() {
+  await database.query('drop schema public cascade');
+  await database.query('create schema public');
+}
+
+beforeAll(cleanDatabase);
+
 test('GET to /api/v1/migrations should return 200', async () => {
   const response = await fetch('http://localhost:3000/api/v1/migrations');
   expect(response.status).toBe(200);
 
   const responseBody = await response.json();
-  console.log(process.env.NODE_ENV);
 
-  expect(process.env.NODE_ENV).toBe('test');
-  expect(process.env.POSTGRES_HOST_PORT).toBe('5432');
   expect(Array.isArray(responseBody)).toBe(true);
   expect(responseBody.length).toBeGreaterThan(0);
 });

@@ -7,10 +7,7 @@ const query = async (queryObject) => {
     user: process.env.POSTGRES_USER,
     database: process.env.POSTGRES_DB,
     password: process.env.POSTGRES_PASSWORD,
-    ssl:
-      process.env.NODE_ENV === 'development' || process.env.NODE_ENV === 'test'
-        ? false
-        : true
+    ssl: getSSLValues()
   });
 
   try {
@@ -25,18 +22,13 @@ const query = async (queryObject) => {
   }
 };
 
-const pool = async () => {
-  const pool = new Pool({
-    host: process.env.POSTGRES_HOST,
-    port: process.env.POSTGRES_HOST_PORT,
-    user: process.env.POSTGRES_USER,
-    database: process.env.POSTGRES_DB,
-    password: process.env.POSTGRES_PASSWORD,
-    max: 20,
-    idleTimeoutMillis: 30000,
-    connectionTimeoutMillis: 2000
-  });
-};
+function getSSLValues() {
+  if (process.env.POSTGRES_CA) {
+    return {ca: process.env.POSTGRES_CA};
+  }
+
+  return process.env.NODE_ENV === 'production' ? true : false;
+}
 
 export default {
   query: query
